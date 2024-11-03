@@ -181,7 +181,7 @@ endif
 #
 
 # keep standard at C11 and C++11
-MK_CPPFLAGS  = -Iggml/include -Iggml/src -Iinclude -Isrc -Iexamples
+MK_CPPFLAGS  = -Iggml/include -Iggml/src -Iinclude -Isrc -Iservers
 MK_CFLAGS    = -std=c11   -fPIC
 MK_CXXFLAGS  = -std=c++11 -fPIC
 MK_NVCCFLAGS = -std=c++11
@@ -810,12 +810,12 @@ OBJ_WHISPER += \
 	src/whisper.o
 
 OBJ_COMMON += \
-	examples/common.o \
-	examples/common-ggml.o \
-	examples/grammar-parser.o
+	servers/common.o \
+	servers/common-ggml.o \
+	servers/grammar-parser.o
 
 OBJ_SDL += \
-	examples/common-sdl.o
+	servers/common-sdl.o
 
 OBJ_ALL = $(OBJ_GGML) $(OBJ_WHISPER) $(OBJ_COMMON) $(OBJ_SDL)
 
@@ -994,14 +994,14 @@ $(LIB_WHISPER_S): \
 
 # common
 
-examples/common.o: \
-	examples/common.cpp \
-	examples/common.h
+servers/common.o: \
+	servers/common.cpp \
+	servers/common.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-examples/common-ggml.o: \
-	examples/common-ggml.cpp \
-	examples/common-ggml.h
+servers/common-ggml.o: \
+	servers/common-ggml.cpp \
+	servers/common-ggml.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(LIB_COMMON): \
@@ -1017,9 +1017,9 @@ $(LIB_COMMON_S): \
 CFLAGS_SDL=$(shell sdl2-config --cflags)
 LDFLAGS_SDL=$(shell sdl2-config --libs)
 
-examples/common-sdl.o: \
-	examples/common-sdl.cpp \
-	examples/common-sdl.h
+servers/common-sdl.o: \
+	servers/common-sdl.cpp \
+	servers/common-sdl.h
 	$(CXX) $(CXXFLAGS) $(CFLAGS_SDL) -c $< -o $@
 
 $(LIB_COMMON_SDL): \
@@ -1035,7 +1035,7 @@ clean:
 	rm -rvf src/*.o
 	rm -rvf src/coreml/*.o
 	rm -rvf tests/*.o
-	rm -rvf examples/*.o
+	rm -rvf servers/*.o
 	rm -rvf *.a
 	rm -rvf *.dll
 	rm -rvf *.so
@@ -1049,10 +1049,10 @@ clean:
 	rm -vrf ggml/src/ggml-cuda/template-instances/*.o
 	rm -rvf $(BUILD_TARGETS)
 	rm -rvf $(TEST_TARGETS)
-	find examples -type f -name "*.o" -delete
+	find servers -type f -name "*.o" -delete
 
 #
-# Examples
+# servers  
 #
 
 # $< is the first prerequisite, i.e. the source file.
@@ -1062,49 +1062,49 @@ clean:
 # Helper function that replaces .c, .cpp, and .cu file endings with .o:
 GET_OBJ_FILE = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(patsubst %.cu,%.o,$(1))))
 
-main: examples/main/main.cpp \
+main: servers/main/main.cpp \
 	$(OBJ_GGML) $(OBJ_WHISPER) $(OBJ_COMMON)
 	$(CXX) $(CXXFLAGS) -c $< -o $(call GET_OBJ_FILE, $<)
 	$(CXX) $(CXXFLAGS) $(filter-out %.h $<,$^) $(call GET_OBJ_FILE, $<) -o $@ $(LDFLAGS)
 
-bench: examples/bench/bench.cpp \
+bench: servers/bench/bench.cpp \
 	$(OBJ_GGML) $(OBJ_WHISPER) $(OBJ_COMMON)
 	$(CXX) $(CXXFLAGS) -c $< -o $(call GET_OBJ_FILE, $<)
 	$(CXX) $(CXXFLAGS) $(filter-out %.h $<,$^) $(call GET_OBJ_FILE, $<) -o $@ $(LDFLAGS)
 
-quantize: examples/quantize/quantize.cpp \
+quantize: servers/quantize/quantize.cpp \
 	$(OBJ_GGML) $(OBJ_WHISPER) $(OBJ_COMMON)
 	$(CXX) $(CXXFLAGS) -c $< -o $(call GET_OBJ_FILE, $<)
 	$(CXX) $(CXXFLAGS) $(filter-out %.h $<,$^) $(call GET_OBJ_FILE, $<) -o $@ $(LDFLAGS)
 
-server: examples/server/server.cpp \
+server: servers/server/server.cpp \
 	$(OBJ_GGML) $(OBJ_WHISPER) $(OBJ_COMMON)
 	$(CXX) $(CXXFLAGS) -c $< -o $(call GET_OBJ_FILE, $<)
 	$(CXX) $(CXXFLAGS) $(filter-out %.h $<,$^) $(call GET_OBJ_FILE, $<) -o $@ $(LDFLAGS) $(LWINSOCK2)
 
-command: examples/command/command.cpp \
+command: servers/command/command.cpp \
 	$(OBJ_GGML) $(OBJ_WHISPER) $(OBJ_COMMON) $(OBJ_SDL)
 	$(CXX) $(CXXFLAGS) $(CFLAGS_SDL) -c $< -o $(call GET_OBJ_FILE, $<)
 	$(CXX) $(CXXFLAGS) $(filter-out %.h $<,$^) $(call GET_OBJ_FILE, $<) -o $@ $(LDFLAGS) $(LDFLAGS_SDL)
 
-stream: examples/stream/stream.cpp \
+stream: servers/stream/stream.cpp \
 	$(OBJ_GGML) $(OBJ_WHISPER) $(OBJ_COMMON) $(OBJ_SDL)
 	$(CXX) $(CXXFLAGS) $(CFLAGS_SDL) -c $< -o $(call GET_OBJ_FILE, $<)
 	$(CXX) $(CXXFLAGS) $(filter-out %.h $<,$^) $(call GET_OBJ_FILE, $<) -o $@ $(LDFLAGS) $(LDFLAGS_SDL)
 
-lsp: examples/lsp/lsp.cpp \
+lsp: servers/lsp/lsp.cpp \
 	$(OBJ_GGML) $(OBJ_WHISPER) $(OBJ_COMMON) $(OBJ_SDL)
 	$(CXX) $(CXXFLAGS) $(CFLAGS_SDL) -c $< -o $(call GET_OBJ_FILE, $<)
 	$(CXX) $(CXXFLAGS) $(filter-out %.h $<,$^) $(call GET_OBJ_FILE, $<) -o $@ $(LDFLAGS) $(LDFLAGS_SDL)
 
 # TODO: disabled until update
 #       https://github.com/ggerganov/whisper.cpp/issues/1818
-#talk: examples/talk/talk.cpp examples/talk/gpt-2.cpp \
+#talk: servers/talk/talk.cpp servers/talk/gpt-2.cpp \
 #	$(OBJ_GGML) $(OBJ_WHISPER) $(OBJ_COMMON) $(OBJ_SDL)
 #	$(CXX) $(CXXFLAGS) $(CFLAGS_SDL) -c $< -o $(call GET_OBJ_FILE, $<)
 #	$(CXX) $(CXXFLAGS) $(filter-out %.h $<,$^) $(call GET_OBJ_FILE, $<) -o $@ $(LDFLAGS) $(LDFLAGS_SDL)
 
-talk-llama: examples/talk-llama/talk-llama.cpp examples/talk-llama/llama.cpp examples/talk-llama/llama-vocab.cpp examples/talk-llama/llama-grammar.cpp examples/talk-llama/llama-sampling.cpp examples/talk-llama/unicode.cpp examples/talk-llama/unicode-data.cpp \
+talk-llama: servers/talk-llama/talk-llama.cpp servers/talk-llama/llama.cpp servers/talk-llama/llama-vocab.cpp servers/talk-llama/llama-grammar.cpp servers/talk-llama/llama-sampling.cpp servers/talk-llama/unicode.cpp servers/talk-llama/unicode-data.cpp \
 	$(OBJ_GGML) $(OBJ_WHISPER) $(OBJ_COMMON) $(OBJ_SDL)
 	$(CXX) $(CXXFLAGS) $(CFLAGS_SDL) -c $< -o $(call GET_OBJ_FILE, $<)
 	$(CXX) $(CXXFLAGS) $(filter-out %.h $<,$^) $(call GET_OBJ_FILE, $<) -o $@ $(LDFLAGS) $(LDFLAGS_SDL)
@@ -1179,4 +1179,4 @@ tiny.en tiny base.en base small.en small medium.en medium large-v1 large-v2 larg
 		echo "" ; \
 		./main -m models/ggml-$@.bin -f $$f ; \
 		echo "" ; \
-	done
+	done   
