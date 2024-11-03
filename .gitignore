@@ -41,7 +41,7 @@ examples/whisper.objc/whisper.objc.xcodeproj/xcuserdata/
 examples/whisper.objc/whisper.objc.xcodeproj/project.xcworkspace/xcuserdata
 
 extra/bench-gg.txt
-
+models/ggml-base.en.bin
 models/*.mlmodel
 models/*.mlmodelc
 models/*.mlpackage
