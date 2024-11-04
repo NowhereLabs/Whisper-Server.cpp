@@ -7,11 +7,11 @@
 - [make](https://www.gnu.org/software/make/): A build automation tool that automatically builds executable programs from source code.
 - [clang](https://clang.llvm.org/): A compatible C++ compiler.
 
-# Download the model and build the server
+# Download the model and build the server:
 
     RUN wget -P models/ https://huggingface.co/ggerganov/whisper.cpp/resolve/main/  ggml-base.en.bin && \ make server
 
-# Start the server
+# Start the server:
 
     ./server
 
@@ -51,7 +51,7 @@ make -j large-v3
 make -j large-v3-turbo
 ```
 
-## Memory usage
+## Memory usage:
 
 | Model  | Disk    | Mem     |
 | ------ | ------- | ------- |
@@ -61,7 +61,7 @@ make -j large-v3-turbo
 | medium | 1.5 GiB | ~2.1 GB |
 | large  | 2.9 GiB | ~3.9 GB |
 
-## Usage
+## Usage:
 
 ```
 ./server -h
