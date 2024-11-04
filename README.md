@@ -7,9 +7,13 @@
 - [make](https://www.gnu.org/software/make/): A build automation tool that automatically builds executable programs from source code.
 - [clang](https://clang.llvm.org/): A compatible C++ compiler.
 
-# Install:
+# Download the model and build the server
 
-    wget -P models/ https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin && make server && ./server
+    RUN wget -P models/ https://huggingface.co/ggerganov/whisper.cpp/resolve/main/  ggml-base.en.bin && \ make server
+
+# Start the server
+
+    ./server
 
 **/inference**
 
