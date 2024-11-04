@@ -7,9 +7,7 @@ Ensure you have the following installed on your system:
 
 - [wget](https://www.gnu.org/software/wget/): A utility for downloading files from the web.
 - [make](https://www.gnu.org/software/make/): A build automation tool that automatically builds executable programs from source code.
-- A compatible C++ compiler:
-  - [g++](https://gcc.gnu.org/)
-  - [clang](https://clang.llvm.org/)
+- [clang](https://clang.llvm.org/): A compatible C++ compiler.
 
 Install/Launch
 
