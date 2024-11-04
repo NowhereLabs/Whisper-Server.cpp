@@ -67,7 +67,7 @@ make -j large-v3-turbo
 | medium | 1.5 GiB | ~2.1 GB |
 | large  | 2.9 GiB | ~3.9 GB |
 
-## Usage:
+## Help:
 
 ```
 ./server -h
