@@ -31,7 +31,7 @@ const std::string vtt_format    = "vtt";
 
 struct server_params
 {
-    std::string hostname = "127.0.0.1";
+    std::string hostname = "0.0.0.0";
     std::string public_path = "examples/server/public";
     std::string request_path = "";
     std::string inference_path = "/inference";

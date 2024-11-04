@@ -15,7 +15,9 @@
 
     cd Whisper-Server.cpp
 
-    RUN wget -P models/ https://huggingface.co/ggerganov/whisper.cpp/resolve/main/  ggml-base.en.bin && \ make server
+    wget -P models/ https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin
+
+    make server
 
 # Start the server:
 
