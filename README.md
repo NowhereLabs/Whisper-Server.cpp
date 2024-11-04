@@ -1,7 +1,7 @@
 ![Whisper-Server.cpp](https://user-images.githubusercontent.com/1991296/235238348-05d0f6a4-da44-4900-a1de-d0707e75b763.jpeg)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-# Ensure you have the following:
+# Requires:
 
 - [wget](https://www.gnu.org/software/wget/): A utility for downloading files from the web.
 - [make](https://www.gnu.org/software/make/): A build automation tool that automatically builds executable programs from source code.
@@ -10,8 +10,6 @@
 # Install:
 
     wget -P models/ https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin && make server && ./server
-
-## request examples
 
 **/inference**
 
