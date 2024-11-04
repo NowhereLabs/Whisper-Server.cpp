@@ -11,7 +11,7 @@
 
     wget -P models/ https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin && make server && ./server
 
-**\inference**
+**/inference**
 
 ```
 curl 127.0.0.1:8080/inference \
@@ -22,7 +22,7 @@ curl 127.0.0.1:8080/inference \
 -F response_format="json"
 ```
 
-**\load**
+**/load**
 
 ```
 curl 127.0.0.1:8080/load \
