@@ -7,7 +7,13 @@
 - [make](https://www.gnu.org/software/make/): A build automation tool that automatically builds executable programs from source code.
 - [clang](https://clang.llvm.org/): A compatible C++ compiler.
 
+# Clone this repo:
+
+    git clone https://github.com/NowhereLabs/Whisper-Server.cpp.git
+
 # Download the model and build the server:
+
+    cd Whisper-Server.cpp
 
     RUN wget -P models/ https://huggingface.co/ggerganov/whisper.cpp/resolve/main/  ggml-base.en.bin && \ make server
 
