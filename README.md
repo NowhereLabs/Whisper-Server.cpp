@@ -6,6 +6,7 @@
 ## Deploy server with base.en
 
 Prerequisites:
+
 Ensure you have the following installed on your system:
 
     wget: A utility for downloading files from the web.
